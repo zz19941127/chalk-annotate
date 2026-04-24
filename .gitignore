@@ -1,0 +1,13 @@
+# LaTeX
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.pdf
+*.synctex.gz
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,110 @@
+%%
+%% chalk-annotate.sty — Hand-drawn chalk-textured annotations for LaTeX Beamer
+%% Based on pre-rendered PNG images with transparent backgrounds.
+%%
+%% Usage:
+%%   \usepackage{chalk-annotate}
+%%   \hlellipse{important}            % default red
+%%   \hlellipse[blue]{important}      % blue
+%%   \hlbox[green]{box content}       % green box with light fill
+%%   \hlunderline[orange]{underlined} % orange underline
+%%
+%% Available colors: red, blue, green, orange, purple
+%% Prerequisite: assets/ folder with PNG files from generate-colors.py
+%%
+
+\ProvidesPackage{chalk-annotate}[2026/04/24 v1.0 Hand-drawn chalk annotations for Beamer]
+
+% ---- Required packages ----
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\RequirePackage{calc}
+\usetikzlibrary{calc, backgrounds}
+
+% ---- Asset path (change with \annsetpath{path}) ----
+\newcommand{\ann@assetpath}{assets}
+\newcommand{\annsetpath}[1]{\renewcommand{\ann@assetpath}{#1}}
+
+\ProcessOptions
+
+% ---- Internal: measure text and set \imgw, \imgh ----
+\newcommand{\annmeasure}[3][4]{%
+  % #1 = inner sep (pt), #2 = extra padding (pt), #3 = content
+  \setbox0=\hbox{#3}%
+  \pgfmathsetlengthmacro{\imgw}{\wd0+#1*2pt+#2}%
+  \pgfmathsetlengthmacro{\imgh}{\ht0+\dp0+#1*2pt+#2}%
+}
+
+% ============================================================
+%  Annotation commands
+%  Each takes an optional [color] argument (default: red)
+%  and a mandatory {content} argument.
+% ============================================================
+
+% ---- Ellipse \hlellipse[color]{content} ----
+\newcommand{\hlellipse}[2][red]{%
+  \annmeasure[4]{10pt}{#2}%
+  \tikz[baseline=(X.base)]{%
+    \node[inner sep=4pt] (X) {#2};%
+    \node[anchor=center, inner sep=0pt] at (X.center)
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-ellipse.png}};%
+  }%
+}
+
+% ---- Underline \hlunderline[color]{content} ----
+\newcommand{\hlunderline}[2][red]{%
+  \annmeasure[1]{6pt}{#2}%
+  \tikz[baseline=(X.base)]{%
+    \node[inner sep=1pt] (X) {#2};%
+    \node[anchor=north, inner sep=0pt] at ([yshift=-0.5pt]X.south)
+      {\includegraphics[width=\imgw]{\ann@assetpath/#1/ann-underline.png}};%
+  }%
+}
+
+% ---- Box \hlbox[color]{content} ----
+% Light fill behind text (background layer), border on top
+\newcommand{\hlbox}[2][red]{%
+  \annmeasure[4]{10pt}{#2}%
+  \tikz[baseline=(X.base)]{%
+    \node[inner sep=4pt] (X) {#2};%
+    % Light fill: behind text
+    \begin{pgfonlayer}{background}
+      \node[anchor=center, inner sep=0pt] at (X.center)
+        {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-box-fill.png}};%
+    \end{pgfonlayer}
+    % Border: on top of text
+    \node[anchor=center, inner sep=0pt] at (X.center)
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-box-border.png}};%
+  }%
+}
+
+% ---- Circle/rounded rect \hlcircle[color]{content} ----
+\newcommand{\hlcircle}[2][red]{%
+  \annmeasure[3]{8pt}{#2}%
+  \tikz[baseline=(X.base)]{%
+    \node[inner sep=3pt] (X) {#2};%
+    \node[anchor=center, inner sep=0pt] at (X.center)
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-ellipse.png}};%
+  }%
+}
+
+% ---- Right arrow \hlarrowright[color]{content} ----
+\newcommand{\hlarrowright}[2][red]{%
+  \tikz[baseline=(X.base)]{%
+    \node[inner sep=2pt] (X) {#2};%
+    \node[anchor=west, inner sep=0pt] at ([xshift=3pt]X.east)
+      {\includegraphics[height=1.5ex]{\ann@assetpath/#1/ann-arrow-right.png}};%
+  }%
+}
+
+% ---- Strike-through \hlstrike[color]{content} ----
+\newcommand{\hlstrike}[2][red]{%
+  \annmeasure[1]{4pt}{#2}%
+  \tikz[baseline=(X.base)]{%
+    \node[inner sep=1pt] (X) {#2};%
+    \node[anchor=center, inner sep=0pt] at (X.center)
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-strike.png}};%
+  }%
+}
+
+\endinput

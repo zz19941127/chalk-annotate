@@ -1,0 +1,126 @@
+% !TEX program = xelatex
+% ============================================================
+%  chalk-annotate 示例文档 | Example Document
+%  编译: xelatex example.tex (编译两次)
+% ============================================================
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+% ---- 中文支持 ----
+\usepackage{ctex}
+
+% ---- 手绘标注包 ----
+\usepackage{chalk-annotate}
+
+% ---- 常用包 ----
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+
+% ============================================================
+%  Beamer 主题
+% ============================================================
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+  \hfill\insertframenumber{}/\inserttotalframenumber\hspace{1em}\vspace{0.5em}%
+}
+
+\definecolor{accent}{HTML}{C0392B}
+\setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{itemize item}{fg=accent}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+
+% ---- frametitle 样式 ----
+\setbeamertemplate{frametitle}{%
+  \vspace{0.5em}\insertframetitle\par
+  \vspace{-0.2em}{\color{accent}\rule{2cm}{2pt}}\vspace{0.2em}%
+}
+
+% ============================================================
+\begin{document}
+
+% ---- 封面 ----
+\begin{frame}[c]
+  \centering
+  {\Large\bfseries chalk-annotate}\par
+  \vspace{0.5em}
+  {\normalsize Hand-drawn chalk annotations for \LaTeX{} Beamer}\par
+  \vspace{0.5em}
+  {\small\color{gray} v1.0 \quad 2026-04-24}
+\end{frame}
+
+% ---- 基本用法 ----
+\begin{frame}{Basic Usage}
+  All commands take an optional \texttt{[color]} argument:
+
+  \vspace{1em}
+  \begin{itemize}\setlength{\itemsep}{0.6em}
+    \item \texttt{\textbackslash hlellipse\{text\}}
+          \quad$\Rightarrow$\quad \hlellipse{text}
+    \item \texttt{\textbackslash hlunderline\{text\}}
+          \quad$\Rightarrow$\quad \hlunderline{text}
+    \item \texttt{\textbackslash hlbox\{text\}}
+          \quad$\Rightarrow$\quad \hlbox{text}
+    \item \texttt{\textbackslash hlarrowright\{text\}}
+          \quad$\Rightarrow$\quad \hlarrowright{text}
+    \item \texttt{\textbackslash hlstrike\{text\}}
+          \quad$\Rightarrow$\quad \hlstrike{text}
+  \end{itemize}
+\end{frame}
+
+% ---- 混合颜色 ----
+\begin{frame}{Mixed Colors}
+  Use different colors in the same document:
+
+  \vspace{1em}
+  \begin{itemize}\setlength{\itemsep}{0.8em}
+    \item \hlellipse{Default (red)} — \texttt{\textbackslash hlellipse\{...\}}
+    \item \hlellipse[blue]{Blue} — \texttt{\textbackslash hlellipse[blue]\{...\}}
+    \item \hlellipse[green]{Green} — \texttt{\textbackslash hlellipse[green]\{...\}}
+    \item \hlellipse[orange]{Orange} — \texttt{\textbackslash hlellipse[orange]\{...\}}
+    \item \hlellipse[purple]{Purple} — \texttt{\textbackslash hlellipse[purple]\{...\}}
+  \end{itemize}
+\end{frame}
+
+% ---- 中文示例 ----
+\begin{frame}{中文示例}
+  \begin{itemize}\setlength{\itemsep}{0.6em}
+    \item 核心概念：\hlellipse{比较优势}
+    \item 传统理论忽略了\hlunderline[blue]{要素禀赋结构}的内生性
+    \item 实证研究发现 \hlbox[green]{$\beta_1 < 0$}：偏离比较优势抑制增长
+    \item 对\hlellipse[orange]{中低收入国家}的影响更为显著
+  \end{itemize}
+
+  \vspace{1em}
+  公式中使用：
+  \[
+    Growth_{it} = \beta_0
+      + \hlellipse[blue]{$\beta_1$} \cdot TCI_{it}
+      + \beta_2 \cdot X_{it}
+      + \mu_i + \lambda_t + \varepsilon_{it}
+  \]
+\end{frame}
+
+% ---- 方框展示 ----
+\begin{frame}{Box Styles}
+  \centering
+  \vspace{1em}
+  \renewcommand{\arraystretch}{2.5}
+  \begin{tabular}{cl}
+    \toprule
+    \textbf{Color} & \textbf{Box with fill + border} \\
+    \midrule
+    \texttt{red}
+      & \hlbox{示例文字 Sample text} \\
+    \texttt{blue}
+      & \hlbox[blue]{示例文字 Sample text} \\
+    \texttt{green}
+      & \hlbox[green]{示例文字 Sample text} \\
+    \texttt{orange}
+      & \hlbox[orange]{示例文字 Sample text} \\
+    \texttt{purple}
+      & \hlbox[purple]{示例文字 Sample text} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\end{document}
