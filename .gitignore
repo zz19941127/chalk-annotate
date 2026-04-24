@@ -11,3 +11,7 @@
 # OS
 .DS_Store
 Thumbs.db
+
+# CTAN build artifacts
+.ctan-build/
+chalk-annotate.zip

@@ -1,0 +1,249 @@
+% !TEX program = xelatex
+% ============================================================
+%  chalk-annotate documentation
+%  Compile: xelatex chalk-annotate-doc.tex (run twice)
+% ============================================================
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+\usepackage{ctex}
+\usepackage{chalk-annotate}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+  \hfill\insertframenumber{}/\inserttotalframenumber\hspace{1em}\vspace{0.5em}%
+}
+
+\definecolor{accent}{HTML}{C0392B}
+\setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{itemize item}{fg=accent}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{0.5em}\insertframetitle\par
+  \vspace{-0.2em}{\color{accent}\rule{2cm}{2pt}}\vspace{0.2em}%
+}
+
+% ============================================================
+\begin{document}
+
+% ---- Title ----
+\begin{frame}[c]
+  \centering
+  {\Large\bfseries chalk-annotate}\par
+  \vspace{0.5em}
+  {\normalsize Hand-drawn chalk annotations for \LaTeX{} Beamer}\par
+  \vspace{1em}
+  {\small v1.1 \quad 2026-04-25}\par
+  \vspace{0.3em}
+  {\small\color{gray} MIT License}
+\end{frame}
+
+% ---- Overview ----
+\begin{frame}{Overview}
+  \textbf{What?}
+  Pre-rendered PNG overlays with natural chalk grain and opacity variation.
+
+  \vspace{0.8em}
+  \textbf{Why?}
+  Far more realistic than pure TikZ decorations.
+
+  \vspace{0.8em}
+  \textbf{How?}
+  \begin{enumerate}
+    \item Install the package
+    \item Add \texttt{\textbackslash usepackage\{chalk-annotate\}}
+    \item Use annotation commands in your slides
+  \end{enumerate}
+
+  \vspace{0.8em}
+  \textbf{Result:} \hlellipse{emphasized text} with a hand-drawn feel.
+\end{frame}
+
+% ---- Installation ----
+\begin{frame}{Installation}
+  \textbf{Option 1: TeX Live (recommended)}
+  \begin{itemize}
+    \item \texttt{tlmgr install chalk-annotate}
+    \item Then just use: \texttt{\textbackslash usepackage\{chalk-annotate\}}
+  \end{itemize}
+
+  \vspace{0.8em}
+  \textbf{Option 2: Overleaf}
+  \begin{itemize}
+    \item Upload \texttt{chalk-annotate.sty} and the \texttt{assets/} folder
+    \item Set compiler to \textbf{XeLaTeX}
+  \end{itemize}
+
+  \vspace{0.8em}
+  \textbf{Option 3: Local (manual)}
+  \begin{itemize}
+    \item Download from GitHub: \texttt{github.com/zz19941127/chalk-annotate}
+    \item Place \texttt{.sty} + \texttt{assets/} next to your \texttt{.tex} file
+    \item Compile with \texttt{xelatex}
+  \end{itemize}
+\end{frame}
+
+% ---- Commands ----
+\begin{frame}{Commands}
+  All commands take an optional \texttt{[color]} argument (default: \texttt{red}).
+
+  \vspace{0.8em}
+  \renewcommand{\arraystretch}{2.2}
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Command} & \textbf{Effect} \\
+    \midrule
+    \texttt{\textbackslash hlellipse\{text\}}
+      & \hlellipse{text} \\
+    \texttt{\textbackslash hlunderline\{text\}}
+      & \hlunderline{text} \\
+    \texttt{\textbackslash hlbox\{text\}}
+      & \hlbox{text} \\
+    \texttt{\textbackslash hlarrowright\{text\}}
+      & \hlarrowright{text} \\
+    \texttt{\textbackslash hlstrike\{text\}}
+      & \hlstrike{text} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+% ---- Colors ----
+\begin{frame}{Available Colors}
+  Five colors: \texttt{red} · \texttt{blue} · \texttt{green} · \texttt{orange} · \texttt{purple}
+
+  \vspace{1em}
+  \begin{itemize}\setlength{\itemsep}{0.8em}
+    \item \hlellipse{Default (red)}
+    \item \hlellipse[blue]{Blue}
+    \item \hlellipse[green]{Green}
+    \item \hlellipse[orange]{Orange}
+    \item \hlellipse[purple]{Purple}
+  \end{itemize}
+\end{frame}
+
+% ---- Box details ----
+\begin{frame}{Box Styles}
+  \centering
+  \vspace{0.5em}
+  \texttt{\textbackslash hlbox} uses two layers:
+  \textbf{light fill} behind text + \textbf{chalk border} on top.
+
+  \vspace{1em}
+  \renewcommand{\arraystretch}{2.5}
+  \begin{tabular}{cl}
+    \toprule
+    \textbf{Color} & \textbf{Result} \\
+    \midrule
+    \texttt{red}    & \hlbox{Sample text} \\
+    \texttt{blue}   & \hlbox[blue]{Sample text} \\
+    \texttt{green}  & \hlbox[green]{Sample text} \\
+    \texttt{orange} & \hlbox[orange]{Sample text} \\
+    \texttt{purple} & \hlbox[purple]{Sample text} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+% ---- All styles ----
+\begin{frame}{All Styles × All Colors}
+  \centering
+  \small
+  \renewcommand{\arraystretch}{2.5}
+  \begin{tabular}{lccccc}
+    \toprule
+    & \textbf{red} & \textbf{blue} & \textbf{green} & \textbf{orange} & \textbf{purple} \\
+    \midrule
+    Ellipse
+      & \hlellipse{abc}
+      & \hlellipse[blue]{abc}
+      & \hlellipse[green]{abc}
+      & \hlellipse[orange]{abc}
+      & \hlellipse[purple]{abc} \\
+    Underline
+      & \hlunderline{abc}
+      & \hlunderline[blue]{abc}
+      & \hlunderline[green]{abc}
+      & \hlunderline[orange]{abc}
+      & \hlunderline[purple]{abc} \\
+    Box
+      & \hlbox{abc}
+      & \hlbox[blue]{abc}
+      & \hlbox[green]{abc}
+      & \hlbox[orange]{abc}
+      & \hlbox[purple]{abc} \\
+    Strike
+      & \hlstrike{abc}
+      & \hlstrike[blue]{abc}
+      & \hlstrike[green]{abc}
+      & \hlstrike[orange]{abc}
+      & \hlstrike[purple]{abc} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+% ---- Academic example ----
+\begin{frame}{Academic Usage Example}
+  \begin{itemize}\setlength{\itemsep}{0.6em}
+    \item Core concept: \hlellipse{comparative advantage}
+    \item Traditional theory ignores the endogeneity of
+          \hlunderline[blue]{factor endowment structure}
+    \item Empirical finding \hlbox[green]{$\beta_1 < 0$}:
+          deviating from comparative advantage inhibits growth
+    \item Effect more significant for \hlellipse[orange]{middle-income countries}
+  \end{itemize}
+
+  \vspace{0.8em}
+  Formula annotations:
+  \[
+    Growth_{it} = \beta_0
+      + \hlellipse[blue]{$\beta_1$} \cdot TCI_{it}
+      + \beta_2 \cdot X_{it}
+      + \mu_i + \lambda_t + \varepsilon_{it}
+  \]
+\end{frame}
+
+% ---- Customization ----
+\begin{frame}{Customization}
+  \textbf{Add a new color}
+  \begin{enumerate}
+    \item Edit \texttt{generate-colors.py} — add your color to \texttt{COLORS} dict
+    \item Run: \texttt{python3 generate-colors.py}
+    \item Use: \texttt{\textbackslash hlellipse[teal]\{text\}}
+  \end{enumerate}
+
+  \vspace{0.8em}
+  \textbf{Use your own hand-drawn images}
+  \begin{itemize}
+    \item Replace any PNG in \texttt{assets/<color>/}
+    \item Requirements: RGBA PNG, transparent background
+    \item Works with Procreate, Photoshop, or any drawing app
+  \end{itemize}
+
+  \vspace{0.8em}
+  \textbf{Change asset path}
+  \begin{itemize}
+    \item \texttt{\textbackslash annsetpath\{images/annotations\}}
+    \item Now looks in \texttt{images/annotations/<color>/}
+  \end{itemize}
+\end{frame}
+
+% ---- Requirements ----
+\begin{frame}{Requirements \& License}
+  \textbf{Requirements}
+  \begin{itemize}
+    \item XeLaTeX or LuaLaTeX
+    \item Packages auto-loaded: \texttt{tikz}, \texttt{graphicx}, \texttt{calc}
+    \item TikZ libraries: \texttt{calc}, \texttt{backgrounds}
+  \end{itemize}
+
+  \vspace{1em}
+  \textbf{License}
+  \begin{itemize}
+    \item MIT License — free for personal and commercial use
+    \item Source: \texttt{github.com/zz19941127/chalk-annotate}
+  \end{itemize}
+\end{frame}
+
+\end{document}

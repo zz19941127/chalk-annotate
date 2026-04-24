@@ -13,7 +13,7 @@
 %% Prerequisite: assets/ folder with PNG files from generate-colors.py
 %%
 
-\ProvidesPackage{chalk-annotate}[2026/04/24 v1.0 Hand-drawn chalk annotations for Beamer]
+\ProvidesPackage{chalk-annotate}[2026/04/25 v1.1 Hand-drawn chalk annotations for Beamer]
 
 % ---- Required packages ----
 \RequirePackage{tikz}
@@ -27,9 +27,17 @@
 
 \ProcessOptions
 
+% ---- Detect installation mode at load time ----
+% Flat mode (CTAN/TeX Live): ann-ellipse-red.png alongside .sty
+% Dir mode  (local/Overleaf): assets/<color>/ann-ellipse.png
+\IfFileExists{ann-ellipse-red.png}{%
+  \newcommand{\ann@img}[2]{ann-#2-#1.png}%
+}{%
+  \newcommand{\ann@img}[2]{\ann@assetpath/#1/ann-#2.png}%
+}
+
 % ---- Internal: measure text and set \imgw, \imgh ----
 \newcommand{\annmeasure}[3][4]{%
-  % #1 = inner sep (pt), #2 = extra padding (pt), #3 = content
   \setbox0=\hbox{#3}%
   \pgfmathsetlengthmacro{\imgw}{\wd0+#1*2pt+#2}%
   \pgfmathsetlengthmacro{\imgh}{\ht0+\dp0+#1*2pt+#2}%
@@ -47,7 +55,7 @@
   \tikz[baseline=(X.base)]{%
     \node[inner sep=4pt] (X) {#2};%
     \node[anchor=center, inner sep=0pt] at (X.center)
-      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-ellipse.png}};%
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@img{#1}{ellipse}}};%
   }%
 }
 
@@ -57,7 +65,7 @@
   \tikz[baseline=(X.base)]{%
     \node[inner sep=1pt] (X) {#2};%
     \node[anchor=north, inner sep=0pt] at ([yshift=-0.5pt]X.south)
-      {\includegraphics[width=\imgw]{\ann@assetpath/#1/ann-underline.png}};%
+      {\includegraphics[width=\imgw]{\ann@img{#1}{underline}}};%
   }%
 }
 
@@ -70,11 +78,11 @@
     % Light fill: behind text
     \begin{pgfonlayer}{background}
       \node[anchor=center, inner sep=0pt] at (X.center)
-        {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-box-fill.png}};%
+        {\includegraphics[width=\imgw, height=\imgh]{\ann@img{#1}{box-fill}}};%
     \end{pgfonlayer}
     % Border: on top of text
     \node[anchor=center, inner sep=0pt] at (X.center)
-      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-box-border.png}};%
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@img{#1}{box-border}}};%
   }%
 }
 
@@ -84,7 +92,7 @@
   \tikz[baseline=(X.base)]{%
     \node[inner sep=3pt] (X) {#2};%
     \node[anchor=center, inner sep=0pt] at (X.center)
-      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-ellipse.png}};%
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@img{#1}{ellipse}}};%
   }%
 }
 
@@ -93,7 +101,7 @@
   \tikz[baseline=(X.base)]{%
     \node[inner sep=2pt] (X) {#2};%
     \node[anchor=west, inner sep=0pt] at ([xshift=3pt]X.east)
-      {\includegraphics[height=1.5ex]{\ann@assetpath/#1/ann-arrow-right.png}};%
+      {\includegraphics[height=1.5ex]{\ann@img{#1}{arrow-right}}};%
   }%
 }
 
@@ -103,7 +111,7 @@
   \tikz[baseline=(X.base)]{%
     \node[inner sep=1pt] (X) {#2};%
     \node[anchor=center, inner sep=0pt] at (X.center)
-      {\includegraphics[width=\imgw, height=\imgh]{\ann@assetpath/#1/ann-strike.png}};%
+      {\includegraphics[width=\imgw, height=\imgh]{\ann@img{#1}{strike}}};%
   }%
 }
 

@@ -6,6 +6,19 @@ Pre-rendered PNG overlays with natural grain and opacity variation — far more 
 
 ## Quick Start
 
+### TeX Live (recommended)
+
+```bash
+tlmgr install chalk-annotate
+```
+
+Then in your `.tex` file:
+
+```latex
+\usepackage{chalk-annotate}
+\hlellipse{important}
+```
+
 ### Overleaf
 
 1. Upload `chalk-annotate.sty` to your project root
